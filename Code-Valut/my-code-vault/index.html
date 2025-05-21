@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Code Vault</title>
+  <script src="https://unpkg.com/monaco-editor@0.44.0/min/vs/loader.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: sans-serif;
+      display: flex;
+      height: 100vh;
+    }
+    #sidebar {
+      width: 250px;
+      background: #f4f4f4;
+      padding: 10px;
+      border-right: 1px solid #ccc;
+      overflow-y: auto;
+    }
+    #editor {
+      flex-grow: 1;
+    }
+    button, select, input {
+      margin: 5px 0;
+      width: 100%;
+    }
+    .file-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 3px 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="sidebar">
+    <h3>📁 Files</h3>
+    <div id="file-list"></div>
+    <input type="text" id="filename" placeholder="File name" />
+    <button id="saveBtn">💾 Save</button>
+    <button id="loadBtn">📂 Load</button>
+    <button id="deleteBtn">🗑️ Delete</button>
+    <select id="language">
+      <option value="javascript">JavaScript</option>
+      <option value="html">HTML</option>
+      <option value="css">CSS</option>
+      <option value="python">Python</option>
+    </select>
+    <button id="changeLangBtn">Change Language</button>
+  </div>
+  <div id="editor"></div>
+  <script type="module" src="main.js"></script>
+</body>
+</html>
