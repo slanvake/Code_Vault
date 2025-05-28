@@ -6,50 +6,107 @@
   <title>Code Vault</title>
   <script src="https://unpkg.com/monaco-editor@0.44.0/min/vs/loader.js"></script>
   <style>
+    /* ... CSS ของคุณยังคงเดิม ... */
     body {
       margin: 0;
       font-family: sans-serif;
       display: flex;
       height: 100vh;
+      overflow: hidden; /* ป้องกัน scrollbar ของ body */
     }
     #sidebar {
-      width: 250px;
+      width: 280px;
       background: #f4f4f4;
       padding: 10px;
       border-right: 1px solid #ccc;
       overflow-y: auto;
+      display: flex;
+      flex-direction: column;
     }
     #editor {
       flex-grow: 1;
+      height: 100vh;
+      min-width: 0;
     }
     button, select, input {
       margin: 5px 0;
       width: 100%;
+      padding: 8px;
+      box-sizing: border-box;
     }
     .file-item {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       margin: 3px 0;
+      padding: 5px;
+      background: #e9e9e9;
+      border-radius: 4px;
+    }
+    .file-item span {
+      flex-grow: 1;
+      padding-right: 5px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .file-item span.active {
+      font-weight: bold;
+      color: #007bff;
+    }
+    .file-item button {
+      width: auto;
+      margin: 0;
+      padding: 4px 8px;
+      font-size: 0.8em;
+      flex-shrink: 0;
+    }
+    #file-list {
+      flex-grow: 1;
+      margin-bottom: 10px;
+    }
+    #auth-status {
+        margin-top: 10px;
+        font-size: 0.9em;
+        color: #555;
+    }
+    hr {
+        width: 100%;
+        margin: 10px 0;
     }
   </style>
 </head>
 <body>
   <div id="sidebar">
-    <h3>📁 Files</h3>
+    <h3>📁 Files (Local)</h3>
     <div id="file-list"></div>
     <input type="text" id="filename" placeholder="File name" />
-    <button id="saveBtn">💾 Save</button>
-    <button id="loadBtn">📂 Load</button>
-    <button id="deleteBtn">🗑️ Delete</button>
+    <button id="saveBtn">💾 Save (Local)</button>
+    <button id="loadBtn">📂 Load (Local)</button>
+    <button id="deleteBtn">🗑️ Delete (Local)</button>
+    <hr>
+    <button id="downloadBtn">⬇️ Download as TXT</button>
+    <hr>
+    <h3>☁️ Google Drive</h3>
+    <button id="authorizeButton">🔑 Authorize Google Drive</button>
+    <button id="uploadToDriveBtn" style="display: none;">☁️ Upload to Drive</button>
+    <button id="signOutButton" style="display: none;">🚪 Sign Out from Drive</button>
+    <div id="auth-status">Google Drive: Not authorized</div>
+    <hr>
     <select id="language">
       <option value="javascript">JavaScript</option>
       <option value="html">HTML</option>
       <option value="css">CSS</option>
       <option value="python">Python</option>
+      <option value="plaintext">Plain Text</option>
     </select>
-    <button id="changeLangBtn">Change Language</button>
+    <button id="changeLangBtn">🌐 Change Language</button>
   </div>
   <div id="editor"></div>
+ 
+  <script async defer src="https://accounts.google.com/gsi/client" onload="onGsiClientLoad()"></script>
+  <script async defer src="https://apis.google.com/js/api.js" onload="onGapiClientLoad()"></script>
+
   <script type="module" src="main.js"></script>
 </body>
 </html>
